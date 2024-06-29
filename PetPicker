@@ -1,0 +1,75 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class PetSelectorApp {
+
+    public static void main(String[] args) {
+        // Create the frame
+        JFrame frame = new JFrame("Pet Selector");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 200);
+        frame.setLayout(new BorderLayout());
+
+        // Create a panel for the radio buttons
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(5, 1));
+
+        // Create the radio buttons
+        JRadioButton catButton = new JRadioButton("Cat");
+        JRadioButton dogButton = new JRadioButton("Dog");
+        JRadioButton fishButton = new JRadioButton("Fish");
+        JRadioButton birdButton = new JRadioButton("Bird");
+        JRadioButton hamsterButton = new JRadioButton("Hamster");
+
+        // Group the radio buttons
+        ButtonGroup group = new ButtonGroup();
+        group.add(catButton);
+        group.add(dogButton);
+        group.add(fishButton);
+        group.add(birdButton);
+        group.add(hamsterButton);
+
+        // Add radio buttons to the panel
+        panel.add(catButton);
+        panel.add(dogButton);
+        panel.add(fishButton);
+        panel.add(birdButton);
+        panel.add(hamsterButton);
+
+        // Create a button to show the selected pet
+        JButton showButton = new JButton("Show Pet");
+
+        // Add the panel and button to the frame
+        frame.add(panel, BorderLayout.CENTER);
+        frame.add(showButton, BorderLayout.SOUTH);
+
+        // Add action listener to show the selected pet
+        showButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Get the selected radio button
+                Enumeration<AbstractButton> buttons = group.getElements();
+                String selectedPet = "";
+                while (buttons.hasMoreElements()) {
+                    JRadioButton button = (JRadioButton) buttons.nextElement();
+                    if (button.isSelected()) {
+                        selectedPet = button.getText();
+                        break;
+                    }
+                }
+
+                // Show a message box with the selected pet
+                if (!selectedPet.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "You selected: " + selectedPet, "Pet Selection", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(frame, "No pet selected", "Pet Selection", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+
+        // Set the frame to be visible
+        frame.setVisible(true);
+    }
+}
